@@ -4,30 +4,17 @@ import quizCompleteimg from "../assets/quiz-complete.png";
 import Question from "./Question.jsx";
 
 function Quiz() {
-    const [answerState, setAnswerState] = useState("");
     const [userAnswer, setuserAnswer] = useState([]);
 
-    const activeQuestionIndex =
-        answerState === "" ? userAnswer.length : userAnswer.length - 1;
+    const activeQuestionIndex = userAnswer.length;
     const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
 
     const handleSelectAnswer = useCallback(function handleSelectAnswer(
         selectedAnswer
     ) {
-        setAnswerState("answered");
         setuserAnswer((prevUSerAnswers) => {
             return [...prevUSerAnswers, selectedAnswer];
         });
-        setTimeout(() => {
-            if (selectedAnswer === QUESTIONS[activeQuestionIndex].answers[0]) {
-                setAnswerState("correct");
-            } else {
-                setAnswerState("wrong");
-            }
-            setTimeout(() => {
-                setAnswerState("");
-            }, 2000);
-        }, 1000);
     },
     []);
 
@@ -49,11 +36,8 @@ function Quiz() {
         <div id="quiz">
             <Question
                 key={activeQuestionIndex}
-                questionText={QUESTIONS[activeQuestionIndex].text}
-                answers={QUESTIONS[activeQuestionIndex].answers}
+                index={activeQuestionIndex}
                 onSelectAnswer={handleSelectAnswer}
-                answerState={answerState}
-                selectedAnswer={userAnswer[userAnswer.length - 1]}
                 onSkipAnswer={handleSkipAnswer}
             />
         </div>
