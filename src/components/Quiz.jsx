@@ -1,11 +1,21 @@
 import { useCallback, useState } from "react";
 import QUESTIONS from "../questions.js";
-import quizCompleteimg from "../assets/quiz-complete.png";
 import Question from "./Question.jsx";
+import Summary from "./Summary.jsx";
+
+const dummyAnswers = [
+    "A library to build user interfaces with help of declarative code.",
+    "Creating responsive layouts in React applications.",
+    "A JavaScript library for building dynamic user interfaces.",
+    'By using the "new" keyword followed by the component name.',
+    "A library for managing global state in React applications.",
+    null,
+    "Using the #if template syntax.",
+];
 
 function Quiz() {
     const [userAnswer, setuserAnswer] = useState([]);
-
+    console.log(userAnswer);
     const activeQuestionIndex = userAnswer.length;
     const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
 
@@ -24,12 +34,7 @@ function Quiz() {
     );
 
     if (quizIsComplete) {
-        return (
-            <div id="summary">
-                <img src={quizCompleteimg} alt="Trophy icon" />
-                <h2>Quiz Completed!</h2>
-            </div>
-        );
+        return <Summary userAnswers={userAnswer} />;
     }
 
     return (
